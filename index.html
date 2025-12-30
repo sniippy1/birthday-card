@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>С днём рождения</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Montserrat:wght@400;500&display=swap" rel="stylesheet">
+
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      min-height: 100vh;
+      font-family: 'Montserrat', sans-serif;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 28px;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(255, 183, 197, 0.5), transparent 40%),
+        radial-gradient(circle at 80% 30%, rgba(255, 241, 193, 0.6), transparent 45%),
+        radial-gradient(circle at 50% 80%, rgba(199, 233, 255, 0.6), transparent 45%),
+        linear-gradient(135deg, #ffe3ec, #fff7d1, #e3f6ff);
+    }
+
+    .card {
+      width: 420px;
+      max-width: 90vw;
+      height: 500px;
+      border-radius: 30px;
+      animation: floatHint 3s ease-in-out infinite;
+      pointer-events: none;
+      position: relative;
+      box-shadow: 0 30px 60px rgba(0,0,0,0.18);
+      background: linear-gradient(160deg, rgba(255,255,255,0.95), rgba(255,255,255,0.85));
+      backdrop-filter: blur(10px);
+      padding: 38px 36px;
+      text-align: center;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: -2px;
+      border-radius: 32px;
+      background: linear-gradient(120deg, #ff9a9e, #fad0c4, #fbc2eb);
+      z-index: -1;
+      opacity: 0.65;
+    }
+
+    @keyframes floatHint {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+      100% { transform: translateY(0); }
+    }
+
+    .date {
+      font-size: 13px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: #ff6f91;
+      margin-bottom: 14px;
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 32px;
+      margin-bottom: 18px;
+    }
+
+    .text {
+      font-size: 17px;
+      line-height: 1.6;
+      color: #444;
+      margin-bottom: 26px;
+    }
+
+    .highlight {
+      padding-top: 18px;
+      border-top: 1px solid rgba(0,0,0,0.08);
+    }
+
+    .highlight-title { font-size: 16px; margin-bottom: 6px; }
+    .time {
+      font-family: 'Playfair Display', serif;
+      font-size: 28px;
+      color: #ff6b6b;
+      font-weight: 600;
+    }
+
+    .heart {
+      margin-top: 10px;
+      font-size: 26px;
+      animation: pulse 1.6s infinite;
+      color: #e25555;
+    }
+
+    @keyframes pulse {
+      0%{transform:scale(1);}
+      50%{transform:scale(1.15);}
+      100%{transform:scale(1);}
+    }
+
+    /* КНОПКИ */
+    .choices {
+      display: flex;
+      gap: 18px;
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .choices.hide {
+      opacity: 0;
+      transform: translateY(20px);
+      pointer-events: none;
+    }
+
+    .choice-btn {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      border: none;
+      font-size: 26px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background:
+        radial-gradient(circle at top left, rgba(255,255,255,0.9), rgba(255,255,255,0.4)),
+        linear-gradient(135deg, #ffd6e8, #ffe9c6);
+      box-shadow:
+        0 10px 20px rgba(0,0,0,0.15),
+        inset 0 2px 6px rgba(255,255,255,0.7);
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+    }
+
+    .choice-btn:nth-child(2) {
+      background: linear-gradient(135deg, #e0f3ff, #d6ffe9);
+    }
+
+    .choice-btn:nth-child(3) {
+      background: linear-gradient(135deg, #f6d6ff, #ffe0f0);
+    }
+
+    .choice-btn:hover {
+      transform: translateY(-6px) scale(1.08);
+      box-shadow: 0 16px 30px rgba(0,0,0,0.18);
+    }
+
+    .chosen-text {
+      font-family: 'Playfair Display', serif;
+      font-size: 28px;
+      color: #ff6b6b;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .chosen-text.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ЛЕТАЮЩИЕ ЭЛЕМЕНТЫ */
+    .float {
+      position: absolute;
+      bottom: -80px;
+      opacity: 0;
+      pointer-events: none;
+      animation: floatUp cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+    }
+
+    @keyframes floatUp {
+      0% { transform: translateY(0) scale(0.8); opacity: 0; }
+      10% { opacity: 1; }
+      100% { transform: translateY(-120vh) scale(1.1); opacity: 0; }
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="card">
+  <div class="date">1 января</div>
+  <h1>С днём рождения, Мисик 🎉</h1>
+  <div class="text">
+    Пусть этот день будет тёплым, радостным и наполненным улыбками.
+    Пусть впереди будет много счастливых моментов и вдохновения.
+  </div>
+  <div class="highlight">
+    <div class="highlight-title">Сегодня особенный вечер</div>
+    <div class="time">19:00</div>
+    <div class="heart">♥</div>
+  </div>
+</div>
+
+<div class="choices" id="choices">
+  <button class="choice-btn">🍷</button>
+  <button class="choice-btn">🍣</button>
+  <button class="choice-btn">🥩</button>
+</div>
+
+<div class="chosen-text" id="chosenText">Ресторан выбран!</div>
+
+<script>
+  const items = ["🎈","🎂","💖","💕","💗","💘"];
+
+  setInterval(() => {
+    const el = document.createElement("div");
+    el.className = "float";
+    el.textContent = items[Math.floor(Math.random() * items.length)];
+    el.style.left = Math.random() * 100 + "vw";
+    el.style.fontSize = 26 + Math.random() * 26 + "px";
+    el.style.animationDuration = 7 + Math.random() * 3 + "s";
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), 12000);
+  }, 500);
+
+  const choices = document.getElementById("choices");
+  const chosenText = document.getElementById("chosenText");
+
+  choices.querySelectorAll(".choice-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      choices.classList.add("hide");
+      setTimeout(() => {
+        choices.style.display = "none";
+        chosenText.classList.add("show");
+      }, 600);
+    });
+  });
+</script>
+
+</body>
+</html>
